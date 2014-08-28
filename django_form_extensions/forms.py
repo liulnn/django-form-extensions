@@ -11,14 +11,19 @@ from django.forms.fields import Field
 
 
 class SimpleListField(Field):
-    def __init__(self, inner_field, max_length=None, min_length=None, *args, **kwargs):
+    def __init__(self, inner_field=None, inner_form=None, max_length=None, min_length=None, *args, **kwargs):
         self.inner_field = inner_field
+        self.inner_form = inner_form
         self.max_length = max_length
         self.min_length = min_length
         super(SimpleListField, self).__init__(*args, **kwargs)
         
-        if not isinstance(inner_field, Field):
+        if inner_field and not isinstance(inner_field, Field):
             raise ValueError(u'inner_field invalid')
+        if inner_form and not issubclass(inner_form, Form):
+            raise ValueError(u'inner_form invalid')
+        if not inner_field and not inner_form:
+            raise ValueError(u'inner_field or inner_form must has one')
         if min_length is not None:
             self.validators.append(validators.MinLengthValidator(min_length))
         if max_length is not None:
@@ -29,10 +34,16 @@ class SimpleListField(Field):
             return None
         if type(value) is not list:
             raise ValidationError(self.error_messages['invalid'])
-        value = list(set(value))
         new_value = []
-        for one in value:
-            new_value.append(self.inner_field.to_python(one))
+        if self.inner_field:
+            for one in value:
+                new_value.append(self.inner_field.to_python(one))
+        elif self.inner_form:
+            for one in value:
+                _form = self.inner_form(one)
+                if not _form.is_valid():
+                    raise ValidationError(self.error_messages['invalid'])
+                new_value.append(_form.cleaned_data)
         return new_value
 
 class FormListField(Field):
