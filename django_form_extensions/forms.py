@@ -8,9 +8,14 @@ from django.core import validators
 from django.core.exceptions import ValidationError
 from django.forms import Form
 from django.forms.fields import Field
+from django.utils.translation import ugettext_lazy
 
 
 class SimpleListField(Field):
+    default_error_messages = {
+        'invalid': ugettext_lazy('Enter a valid value.'),
+    }
+    
     def __init__(self, inner_field=None, inner_form=None, max_length=None, min_length=None, *args, **kwargs):
         self.inner_field = inner_field
         self.inner_form = inner_form
@@ -47,6 +52,10 @@ class SimpleListField(Field):
         return new_value
 
 class FormListField(Field):
+    default_error_messages = {
+        'invalid': ugettext_lazy('Enter a valid value.'),
+    }
+    
     def __init__(self, inner_forms, max_length=None, min_length=None, *args, **kwargs):
         self.inner_forms = inner_forms  # (k,{'k1':v1,'k2':v2})
         self.max_length = max_length
