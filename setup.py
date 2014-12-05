@@ -7,14 +7,14 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.md')).read()
 
 requires = [
-    'django',
+    'django==1.6.6',
 ]
 
 # Use part of the sphinx docs index for the long description
 
 setup(
     name="django-form-extensions",
-    version='0.0.2',
+    version='0.0.3',
     packages=find_packages(),
     install_requires=requires,
     description = 'django form extensions',
