@@ -86,3 +86,24 @@ class FormListField(Field):
                 raise ValidationError(self.error_messages['invalid'])
             new_value.append(_form.cleaned_data)
         return new_value
+    
+class SimpleFormField(Field):
+    default_error_messages = {
+        'invalid': ugettext_lazy('Enter a valid value.'),
+    }
+    
+    def __init__(self, inner_form, *args, **kwargs):
+        self.inner_form = inner_form
+        super(SimpleFormField, self).__init__(*args, **kwargs)
+        if not issubclass(self.inner_form, Form):
+            raise ValidationError(self.error_messages['invalid'])
+    
+    def to_python(self, value):
+        if value in validators.EMPTY_VALUES:
+            return None
+        if type(value) is not dict:
+            raise ValidationError(self.error_messages['invalid'])
+        _form = self.inner_form(one)
+        if not _form.is_valid():
+            raise ValidationError(self.error_messages['invalid'])
+        return _form.cleaned_data
