@@ -103,7 +103,7 @@ class SimpleFormField(Field):
             return None
         if type(value) is not dict:
             raise ValidationError(self.error_messages['invalid'])
-        _form = self.inner_form(one)
+        _form = self.inner_form(value)
         if not _form.is_valid():
             raise ValidationError(self.error_messages['invalid'])
         return _form.cleaned_data
