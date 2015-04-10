@@ -7,7 +7,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.md')).read()
 
 requires = [
-    'django==1.6.6',
+    'django',
 ]
 
 # Use part of the sphinx docs index for the long description
