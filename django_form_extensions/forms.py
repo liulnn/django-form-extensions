@@ -49,7 +49,10 @@ class SimpleListField(Field):
         new_value = []
         if self.inner_field:
             for one in value:
-                new_value.append(self.inner_field.to_python(one))
+                try:
+                    new_value.append(self.inner_field.clean(one))
+                except ValidationError:
+                    raise ValidationError(self.error_messages['invalid'])
         elif self.inner_form:
             for one in value:
                 _form = self.inner_form(one)
