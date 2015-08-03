@@ -38,7 +38,7 @@ class SimpleListField(Field):
 
     def to_python(self, value):
         if value in validators.EMPTY_VALUES:
-            return None
+            return value
         if (type(value) is str) or (type(value) is unicode):
             try:
                 value = json.loads(value)
@@ -85,7 +85,7 @@ class FormListField(Field):
 
     def to_python(self, value):
         if value in validators.EMPTY_VALUES:
-            return None
+            return value
         if (type(value) is str) or (type(value) is unicode):
             try:
                 value = json.loads(value)
@@ -122,7 +122,7 @@ class SimpleFormField(Field):
 
     def to_python(self, value):
         if value in validators.EMPTY_VALUES:
-            return None
+            return value
         if (type(value) is str) or (type(value) is unicode):
             try:
                 value = json.loads(value)
