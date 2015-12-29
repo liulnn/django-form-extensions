@@ -5,6 +5,7 @@ Created on 2014.08.10
 @author: preture
 '''
 import json
+import six
 from django.core import validators
 from django.core.exceptions import ValidationError
 from django.forms import Form
@@ -39,7 +40,7 @@ class SimpleListField(Field):
     def to_python(self, value):
         if value in validators.EMPTY_VALUES:
             return value
-        if (type(value) is str) or (type(value) is unicode):
+        if (type(value) is six.binary_type) or (type(value) is six.text_type):
             try:
                 value = json.loads(value)
             except ValueError:
@@ -86,7 +87,7 @@ class FormListField(Field):
     def to_python(self, value):
         if value in validators.EMPTY_VALUES:
             return value
-        if (type(value) is str) or (type(value) is unicode):
+        if (type(value) is six.binary_type) or (type(value) is six.text_type):
             try:
                 value = json.loads(value)
             except ValueError:
@@ -123,7 +124,7 @@ class SimpleFormField(Field):
     def to_python(self, value):
         if value in validators.EMPTY_VALUES:
             return value
-        if (type(value) is str) or (type(value) is unicode):
+        if (type(value) is six.binary_type) or (type(value) is six.text_type):
             try:
                 value = json.loads(value)
             except ValueError:
