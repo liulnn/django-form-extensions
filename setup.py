@@ -14,13 +14,13 @@ requires = [
 
 setup(
     name="django-form-extensions",
-    version='0.0.3',
+    version='0.0.4',
     packages=find_packages(),
     install_requires=requires,
     description = 'django form extensions',
     long_description=README,
-    author="preture",
-    author_email="preture@163.com",
+    author="liulnn",
+    author_email="liulnn@126.com",
     license="BSD",
     url="https://github.com/preture/django-form-extensions",
     include_package_data=True,
