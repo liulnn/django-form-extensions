@@ -27,11 +27,11 @@ class SimpleListField(Field):
         super(SimpleListField, self).__init__(*args, **kwargs)
 
         if inner_field and not isinstance(inner_field, Field):
-            raise ValueError(u'inner_field invalid')
+            raise ValueError('inner_field invalid')
         if inner_form and not issubclass(inner_form, Form):
-            raise ValueError(u'inner_form invalid')
+            raise ValueError('inner_form invalid')
         if not inner_field and not inner_form:
-            raise ValueError(u'inner_field or inner_form must has one')
+            raise ValueError('inner_field or inner_form must has one')
         if min_length is not None:
             self.validators.append(validators.MinLengthValidator(min_length))
         if max_length is not None:
@@ -78,7 +78,7 @@ class FormListField(Field):
         if (type(inner_forms) is not tuple) \
             or (len(inner_forms) is not 2) \
                 or (type(self.inner_forms[1]) is not dict):
-            raise ValueError(u'inner_forms invalid')
+            raise ValueError('inner_forms invalid')
         if min_length is not None:
             self.validators.append(validators.MinLengthValidator(min_length))
         if max_length is not None:
